@@ -1,0 +1,43 @@
+---
+apiVersion: backstage.io/v1alpha1
+kind: API
+metadata:
+  name: openapi-relatorios
+  title: API de Relatórios Analíticos
+  description: Contrato para extração de relatórios gerenciais consolidados.
+  tags: [rest, python, fastapi]
+  annotations:
+    github.com/project-slug: myorg/api-relatorios
+spec:
+  type: openapi
+  lifecycle: production
+  owner: group:squad-data-analytics
+  system: data-analytics
+  definition: |
+    openapi: "3.0.0"
+    info:
+      version: 1.0.0
+      title: Relatórios API
+    paths:
+      /reports/monthly:
+        get:
+          summary: Retorna o relatório mensal de operações
+---
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: api-relatorios
+  title: Relatórios Gerenciais API
+  description: Microsserviço FastAPI que serve dados do Data Warehouse para os dashboards.
+  tags: [python, fastapi, microservice]
+  annotations:
+    github.com/project-slug: myorg/api-relatorios
+spec:
+  type: service
+  lifecycle: production
+  owner: group:squad-data-analytics
+  system: data-analytics
+  providesApis:
+    - openapi-relatorios
+  dependsOn:
+    - resource:default/db-data-warehouse
